@@ -1,7 +1,16 @@
 FROM node:16.14-alpine
 
 WORKDIR /client
-COPY . /client
+
+ENV PATH /client/node_modules/.bin:$PATH
+
+
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
 
-RUN npm run start
+COPY . ./
+
+EXPOSE 3080
+
+CMD ["npm", "run", "start"]
