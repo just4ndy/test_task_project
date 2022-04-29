@@ -1,0 +1,16 @@
+asgiref==3.5.0
+dj-database-url==0.5.0
+dj-email-url==1.0.5
+Django==4.0.4
+django-cache-url==3.4.0
+django-cors-headers==3.11.0
+django-filter==21.1
+djangorestframework==3.13.1
+environs==9.5.0
+marshmallow==3.15.0
+packaging==21.3
+pyparsing==3.0.8
+python-dotenv==0.20.0
+pytz==2022.1
+sqlparse==0.4.2
+tzdata==2022.1

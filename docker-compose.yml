@@ -1,0 +1,17 @@
+version: "3"
+  services:
+    backend:
+      build: ./server
+      volumes:
+        - ./server
+      ports:
+        - 8000:8000
+
+    frontend:
+      build: ./client
+      volumes:
+        - ./client
+      depends_on:
+        - backend
+      ports:
+        - 3000:3000
