@@ -8,8 +8,9 @@ import MenuItem from '@mui/material/MenuItem'
 import {IUser} from '../../models/IUser'
 import {useAppDispatch, useAppSelector} from '../../hooks/redux'
 import {getAllGroups} from '../../store/reducers/groups/ActionCreators'
-import axios from 'axios'
 import {getUsers} from '../../store/reducers/users/ActionCreators'
+import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -24,12 +25,9 @@ const style = {
 }
 
 const AddUser = () => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {allGroups} = useAppSelector(state => state.groups)
-
-    useEffect(() => {
-        if (allGroups.length === 0) dispatch(getAllGroups())
-    }, [])
 
     const [user, setUser] = useState<IUser>({
         id: 1,
@@ -55,12 +53,16 @@ const AddUser = () => {
     const handleClose = () => setOpen(false)
 
     const handleClick = () => {
-        axios.post('http://localhost:8000/users/', {
-            username: user.username,
-            group: group
-        })
-        dispatch(getUsers(group))
-        handleClose()
+        try {
+            axios.post('http://localhost:8000/users/', {
+                username: user.username,
+                group: group
+            })
+            dispatch(getUsers(group))
+            handleClose()
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     return (

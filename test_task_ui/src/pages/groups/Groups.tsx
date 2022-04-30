@@ -30,7 +30,7 @@ const Groups = () => {
     }
 
     useEffect(() => {
-        dispatch(getGroups())
+        dispatch(getGroups(name, description))
     }, [])
 
     return (

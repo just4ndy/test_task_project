@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem'
 import {getAllGroups} from '../../store/reducers/groups/ActionCreators'
 import {getUsers} from '../../store/reducers/users/ActionCreators'
 import AddUser from '../../components/users/AddUser'
+import {IGroup} from '../../models/IGroup'
 
 const Users = () => {
     const dispatch = useAppDispatch()
@@ -18,7 +19,7 @@ const Users = () => {
     }
 
     useEffect(() => {
-        if (allGroups.length === 0) dispatch(getAllGroups())
+        dispatch(getAllGroups())
         dispatch(getUsers(group))
     }, [group])
 
