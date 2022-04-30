@@ -2,6 +2,7 @@ import React from 'react'
 import {Paper, styled, Typography} from '@mui/material'
 import Button from '@mui/material/Button'
 import {useAppDispatch} from '../../hooks/redux'
+import {useNavigate} from 'react-router-dom'
 import {IGroup} from '../../models/IGroup'
 import {deleteGroup} from '../../store/reducers/groups/ActionCreators'
 import {Link} from 'react-router-dom'
@@ -24,9 +25,11 @@ const spanStyle = {
 }
 
 const GroupItem = ({group}: IProps) => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const clickHandler = (id: number) => {
         dispatch(deleteGroup(id))
+        navigate('/')
     }
     return (
         <Item>

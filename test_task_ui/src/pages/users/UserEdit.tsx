@@ -51,7 +51,7 @@ const UserEdit = () => {
                 username: user.username,
                 group: group
             })
-            return navigate('/users')
+            return navigate('/')
         } catch (e) {
             console.log(e)
         }

@@ -37,7 +37,7 @@ const GroupEdit = () => {
                 name,
                 description,
             })
-            return navigate('/groups')
+            return navigate('/')
         } catch (e) {
             console.log(e)
         }

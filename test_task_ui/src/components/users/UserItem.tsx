@@ -1,6 +1,7 @@
 import React from 'react'
 import {IUser} from '../../models/IUser'
 import {Paper, styled} from '@mui/material'
+import {useNavigate} from 'react-router-dom'
 import Button from '@mui/material/Button'
 import {useAppDispatch} from '../../hooks/redux'
 import {deleteUser} from '../../store/reducers/users/ActionCreators'
@@ -24,9 +25,11 @@ const spanStyle = {
 }
 
 const UserItem = ({user}: IProps) => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const clickHandler = (id: number) => {
         dispatch(deleteUser(id))
+        navigate('/')
     }
     return (
         <Item>
