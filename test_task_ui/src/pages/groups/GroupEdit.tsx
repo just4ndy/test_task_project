@@ -5,7 +5,6 @@ import {Stack, TextField} from '@mui/material'
 import Button from '@mui/material/Button'
 import {useNavigate, useParams} from 'react-router-dom'
 import Box from '@mui/material/Box'
-import {useAppDispatch} from '../../hooks/redux'
 
 
 const GroupEdit = () => {

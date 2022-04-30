@@ -1,17 +1,11 @@
-import React, {useEffect} from 'react'
-import {useAppDispatch, useAppSelector} from '../../hooks/redux'
+import React from 'react'
+import {useAppSelector} from '../../hooks/redux'
 import {Stack, Typography} from '@mui/material'
 import UserItem from './UserItem'
-import {getUsers} from '../../store/reducers/users/ActionCreators'
 import Box from '@mui/material/Box'
 
 const UserList = () => {
-    const dispatch = useAppDispatch()
     const {users, isLoading, error} = useAppSelector(state => state.users)
-
-    useEffect(() => {
-        dispatch(getUsers())
-    }, [])
 
     if (isLoading) {
         return <Typography variant="h5">Loading...</Typography>

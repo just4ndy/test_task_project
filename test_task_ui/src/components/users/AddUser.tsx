@@ -1,22 +1,36 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
-import {useNavigate, useParams} from 'react-router-dom'
-import {IUser} from '../../models/IUser'
-import axios from 'axios'
+import * as React from 'react'
+import {ChangeEvent, useEffect, useState} from 'react'
 import Box from '@mui/material/Box'
-import {FormControl, InputLabel, Select, SelectChangeEvent, Stack, TextField} from '@mui/material'
 import Button from '@mui/material/Button'
+import Modal from '@mui/material/Modal'
+import {FormControl, InputLabel, Select, SelectChangeEvent, TextField} from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
-import {getAllGroups} from '../../store/reducers/groups/ActionCreators'
+import {IUser} from '../../models/IUser'
 import {useAppDispatch, useAppSelector} from '../../hooks/redux'
+import {getAllGroups} from '../../store/reducers/groups/ActionCreators'
+import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
 
-const UserEdit = () => {
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+}
+
+const AddUser = () => {
     const navigate = useNavigate()
-    const {user_id} = useParams()
-
     const dispatch = useAppDispatch()
     const {allGroups} = useAppSelector(state => state.groups)
 
-    const [group, setGroup] = useState<number>(1)
+    useEffect(() => {
+        if (allGroups.length === 0) dispatch(getAllGroups())
+    }, [])
 
     const [user, setUser] = useState<IUser>({
         id: 1,
@@ -28,15 +42,7 @@ const UserEdit = () => {
         },
         created_at: ''
     })
-
-    useEffect(() => {
-        if (allGroups.length === 0) dispatch(getAllGroups())
-        axios.get(`http://localhost:8000/users/${user_id}/`)
-            .then(res => {
-                setUser(res.data)
-            })
-    }, [user_id])
-
+    const [group, setGroup] = useState<number>(1)
     const handleChange = (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (event.target.name === 'group') {
             setGroup(Number(event.target.value))
@@ -45,22 +51,29 @@ const UserEdit = () => {
         }
     }
 
+    const [open, setOpen] = useState(false)
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
+
     const handleClick = () => {
-        try {
-            axios.put(`http://localhost:8000/users/${user.id}/`, {
-                username: user.username,
-                group: group
-            })
-            return navigate('/users')
-        } catch (e) {
-            console.log(e)
-        }
+        axios.post('http://localhost:8000/users/', {
+            username: user.username,
+            group: group
+        })
+        handleClose()
+        return navigate('/users')
     }
 
     return (
-        <div id="user_edit" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <Box marginTop={4} sx={{width: '25%'}}>
-                <Stack spacing={2}>
+        <div>
+            <Button onClick={handleOpen}>Add user</Button>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
                     <TextField required name="username" value={user.username} onChange={e => handleChange(e)}
                                id="standard-basic"
                                label="Name"
@@ -82,13 +95,11 @@ const UserEdit = () => {
                             ))}
                         </Select>
                     </FormControl>
-                    <Button onClick={handleClick} variant="contained" color="primary" type="submit">
-                        Save
-                    </Button>
-                </Stack>
-            </Box>
+                    <Button type="submit" onClick={handleClick}>Add</Button>
+                </Box>
+            </Modal>
         </div>
     )
 }
 
-export default UserEdit
+export default AddUser

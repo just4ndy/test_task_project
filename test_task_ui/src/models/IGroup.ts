@@ -1,5 +1,5 @@
 export interface IGroup {
-    id: number
+    id: Readonly<number>
     name: string
     description: string
 }

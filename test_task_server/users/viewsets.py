@@ -4,7 +4,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from users.serializers import UserSerializer
-from users.services import get_users, UserFilter, get_user
+from users.services import get_users, UserFilter, update_user, create_user
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -20,9 +20,15 @@ class UserViewSet(viewsets.ModelViewSet):
             return super().list(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
-        user = get_user(request.data['id'])
-        user.username = request.data['username']
-        user.group_id = request.data['group']
-        user.save()
-        return Response(status=status.HTTP_200_OK)
+        updated, error = update_user(pk=kwargs['pk'], username=request.data['username'],
+                                     group_id=request.data['group'])
+        if updated:
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': error})
 
+    def create(self, request, *args, **kwargs):
+        created, error = create_user(username=request.data['username'],
+                                     group_id=request.data['group'])
+        if created:
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': error})

@@ -1,12 +1,13 @@
-version: "3"
-  services:
-    backend:
-      volumes:
-        - ./server
-      ports:
-        - "8000:8000"
-    frontend:
-      volumes:
-        - ./client
-      ports:
-        - "3000:3000"
+version: '3'
+
+services:
+  server:
+    build: ./test_task_server/
+    ports:
+      - '8000:8000'
+
+  client:
+    build: ./test_task_ui/
+    ports:
+      - '3000:3000'
+

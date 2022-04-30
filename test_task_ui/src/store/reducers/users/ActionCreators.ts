@@ -3,7 +3,7 @@ import axios from 'axios'
 import {IUser} from '../../../models/IUser'
 import {userSlice} from './userSlice'
 
-export const getUsers = (group: number = 3) => async (dispatch: AppDispatch) => {
+export const getUsers = (group: number = 1) => async (dispatch: AppDispatch) => {
     try {
         dispatch(userSlice.actions.getUser())
         const response = await axios.get<IUser[]>('http://localhost:8000/users/', {

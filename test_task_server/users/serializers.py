@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class LowUserSerializer(serializers.ModelSerializer):
+class LiteUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'group')

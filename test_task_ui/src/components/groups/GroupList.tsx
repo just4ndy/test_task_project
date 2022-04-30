@@ -10,10 +10,6 @@ const GroupList = () => {
     const dispatch = useAppDispatch()
     const {groups, isLoading, error} = useAppSelector(state => state.groups)
 
-    useEffect(() => {
-        dispatch(getGroups())
-    }, [dispatch])
-
     const closeHandler = () => {
         dispatch(groupSlice.actions.clearError())
     }
