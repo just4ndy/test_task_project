@@ -21,7 +21,7 @@ const Users = () => {
     useEffect(() => {
         dispatch(getAllGroups())
         dispatch(getUsers(group))
-    }, [])
+    }, [group])
 
     return (
         <div id="users">
