@@ -9,7 +9,7 @@ import {IUser} from '../../models/IUser'
 import {useAppDispatch, useAppSelector} from '../../hooks/redux'
 import {getAllGroups} from '../../store/reducers/groups/ActionCreators'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import {getUsers} from '../../store/reducers/users/ActionCreators'
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -24,7 +24,6 @@ const style = {
 }
 
 const AddUser = () => {
-    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {allGroups} = useAppSelector(state => state.groups)
 
@@ -60,8 +59,8 @@ const AddUser = () => {
             username: user.username,
             group: group
         })
+        dispatch(getUsers(group))
         handleClose()
-        return navigate('/users')
     }
 
     return (

@@ -6,7 +6,8 @@ import Modal from '@mui/material/Modal'
 import {TextField} from '@mui/material'
 import axios from 'axios'
 import {IGroup} from '../../models/IGroup'
-import {useNavigate} from 'react-router-dom'
+import {getGroups} from '../../store/reducers/groups/ActionCreators'
+import {useAppDispatch} from '../../hooks/redux'
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -21,7 +22,7 @@ const style = {
 }
 
 const AddGroup = () => {
-    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const [group, setGroup] = useState<IGroup>({
         id: 0,
         name: '',
@@ -46,8 +47,8 @@ const AddGroup = () => {
                 name,
                 description,
             })
+            dispatch(getGroups(name))
             handleClose()
-            return navigate('/groups')
         } catch (e) {
             console.log(e)
         }

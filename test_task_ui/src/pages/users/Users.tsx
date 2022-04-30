@@ -11,7 +11,7 @@ const Users = () => {
     const dispatch = useAppDispatch()
     const {allGroups} = useAppSelector(state => state.groups)
 
-    const [group, setGroup] = useState<number>(allGroups[0].id | 1)
+    const [group, setGroup] = useState<number>(1)
 
     const handleChange = (event: SelectChangeEvent) => {
         setGroup(Number(event.target.value))
