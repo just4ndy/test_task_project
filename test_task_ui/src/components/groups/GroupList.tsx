@@ -1,9 +1,7 @@
-import React, {useEffect} from 'react'
 import {useAppDispatch, useAppSelector} from '../../hooks/redux'
 import {Alert, AlertTitle, Stack, Typography} from '@mui/material'
 import Box from '@mui/material/Box'
 import GroupItem from './GroupItem'
-import {getGroups} from '../../store/reducers/groups/ActionCreators'
 import {groupSlice} from '../../store/reducers/groups/groupSlice'
 
 const GroupList = () => {

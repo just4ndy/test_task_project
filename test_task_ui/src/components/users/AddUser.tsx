@@ -1,14 +1,12 @@
 import * as React from 'react'
-import {ChangeEvent, useEffect, useState} from 'react'
+import {ChangeEvent, useState} from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 import {FormControl, InputLabel, Select, SelectChangeEvent, TextField} from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import {IUser} from '../../models/IUser'
-import {useAppDispatch, useAppSelector} from '../../hooks/redux'
-import {getAllGroups} from '../../store/reducers/groups/ActionCreators'
-import {getUsers} from '../../store/reducers/users/ActionCreators'
+import {useAppSelector} from '../../hooks/redux'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 
@@ -26,7 +24,6 @@ const style = {
 
 const AddUser = () => {
     const navigate = useNavigate()
-    const dispatch = useAppDispatch()
     const {allGroups} = useAppSelector(state => state.groups)
 
     const [user, setUser] = useState<IUser>({
@@ -58,8 +55,8 @@ const AddUser = () => {
                 username: user.username,
                 group: group
             })
-            dispatch(getUsers(group))
             handleClose()
+            return navigate('/')
         } catch (e) {
             console.log(e)
         }
