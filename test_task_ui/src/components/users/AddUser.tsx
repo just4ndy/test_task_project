@@ -8,7 +8,9 @@ import MenuItem from '@mui/material/MenuItem'
 import {IUser} from '../../models/IUser'
 import {useAppSelector} from '../../hooks/redux'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import {useAppDispatch} from '../../hooks/redux'
+import {getUsers} from '../../store/reducers/users/ActionCreators'
+
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -23,7 +25,7 @@ const style = {
 }
 
 const AddUser = () => {
-    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const {allGroups} = useAppSelector(state => state.groups)
 
     const [user, setUser] = useState<IUser>({
@@ -56,7 +58,7 @@ const AddUser = () => {
                 group: group
             })
             handleClose()
-            return navigate('/')
+            dispatch(getUsers(group))
         } catch (e) {
             console.log(e)
         }
